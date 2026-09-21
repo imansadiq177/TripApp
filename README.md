@@ -15,3 +15,6 @@ Start Expo med:
 ```bash
 npx expo start
 ```
+Se en demonstration af TripApp her:
+
+https://youtube.com/shorts/-qkmSJYkMRw?feature=share

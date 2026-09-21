@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.homeContainer}>
 
             <Text style={styles.homeTitle}>
-                Velkommen til DayPlanner
+                Velkommen til TripApp
             </Text>
 
             <Text style={styles.homeSubtitle}>

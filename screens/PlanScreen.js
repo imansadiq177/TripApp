@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
     View,
@@ -11,31 +12,23 @@ import {
 import styles from '../styles/GlobalStyles';
 
 const PlanScreen = ({ navigation }) => {
-
-    //gemmer brugerens input og valg 
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [hotel, setHotel] = useState('');
-
     const [categories, setCategories] = useState([]);
     const [foodPreference, setFoodPreference] = useState('');
     const [price, setPrice] = useState('');
+    const [dayPercentage, setDayPercentage] = useState(50);
 
-    //tilføjer eller fjerner en kategori når brugeren trykker på den
     const selectCategory = (category) => {
-
         if (categories.includes(category)) {
- 
-            setCategories(
-                categories.filter(item => item !== category)
-            );
+            setCategories(categories.filter(item => item !== category));
 
             if (category === 'Mad') {
                 setFoodPreference('');
             }
-
         } else {
             setCategories([...categories, category]);
         }
@@ -44,162 +37,121 @@ const PlanScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <View style={styles.container}>
+                <Text style={styles.title}>Opret din plan</Text>
 
-                <Text style={styles.title}>
-                    Opret din plan
-                </Text>
-
-                <Text style={styles.sectionTitle}>
-                    Hvor vil du hen?
-                </Text>
+                <Text style={styles.sectionTitle}>Hvor vil du hen?</Text>
 
                 <Text style={styles.label}>Land</Text>
-
                 <TextInput
                     style={styles.input}
                     placeholder="Skriv et land"
                     value={country}
-                    onChangeText={(text) => setCountry(text)}
+                    onChangeText={setCountry}
                 />
 
                 <Text style={styles.label}>By</Text>
-
                 <TextInput
                     style={styles.input}
                     placeholder="Skriv en by"
                     value={city}
-                    onChangeText={(text) => setCity(text)}
+                    onChangeText={setCity}
                 />
 
-                <Text style={styles.sectionTitle}>
-                    Hvornår skal du afsted?
-                </Text>
+                <Text style={styles.sectionTitle}>Hvornår skal du afsted?</Text>
 
                 <Text style={styles.label}>Fra dato</Text>
-
                 <TextInput
                     style={styles.input}
-                    placeholder="Fx 17/10/2026"
+                    placeholder="Fx 25/10/2026"
                     value={startDate}
-                    onChangeText={(text) => setStartDate(text)}
+                    onChangeText={setStartDate}
                 />
 
                 <Text style={styles.label}>Til dato</Text>
-
                 <TextInput
                     style={styles.input}
-                    placeholder="Fx 20/10/2026"
+                    placeholder="Fx 27/10/2026"
                     value={endDate}
-                    onChangeText={(text) => setEndDate(text)}
+                    onChangeText={setEndDate}
                 />
 
-                <Text style={styles.sectionTitle}>
-                    Hvor skal du bo?
-                </Text>
-
+                <Text style={styles.sectionTitle}>Hvor skal du bo?</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Skriv hotel (valgfrit)"
                     value={hotel}
-                    onChangeText={(text) => setHotel(text)}
+                    onChangeText={setHotel}
                 />
 
-                <Text style={styles.sectionTitle}>
-                    Hvad interesserer dig?
-                </Text>
+                <Text style={styles.sectionTitle}>Hvad interesserer dig?</Text>
 
                 <Button
                     title={categories.includes('Mad') ? '✓ Mad' : 'Mad'}
                     onPress={() => selectCategory('Mad')}
                 />
 
-                {categories.includes('Mad') && foodPreference === '' && (
+                {categories.includes('Mad') && (
                     <View style={styles.foodBox}>
+                        <Text style={styles.foodTitle}>Hvilken type mad?</Text>
 
-                        <Text style={styles.foodTitle}>
-                            Hvilken type mad?
-                        </Text>
-
-                        <Button
-                            title="Halal"
-                            onPress={() => setFoodPreference('Halal')}
-                        />
-
-                        <Button
-                            title="Vegetar"
-                            onPress={() => setFoodPreference('Vegetar')}
-                        />
-
-                        <Button
-                            title="Ingen præference"
-                            onPress={() =>
-                                setFoodPreference('Ingen præference')
-                            }
-                        />
-
+                        {['Halal', 'Vegetar', 'Ingen præference'].map(option => (
+                            <Button
+                                key={option}
+                                title={foodPreference === option ? `✓ ${option}` : option}
+                                onPress={() => setFoodPreference(option)}
+                            />
+                        ))}
                     </View>
                 )}
 
-                {foodPreference !== '' && (
-                    <Text style={styles.foodChoice}>
-                        Madtype: {foodPreference}
-                    </Text>
-                )}
+                {['Seværdigheder', 'Shopping', 'Natur', 'Kultur'].map(category => (
+                    <Button
+                        key={category}
+                        title={categories.includes(category) ? `✓ ${category}` : category}
+                        onPress={() => selectCategory(category)}
+                    />
+                ))}
 
-                <Button
-                    title={
-                        categories.includes('Seværdigheder')
-                            ? '✓ Seværdigheder'
-                            : 'Seværdigheder'
-                    }
-                    onPress={() => selectCategory('Seværdigheder')}
-                />
+                <Text style={styles.sectionTitle}>Prisklasse</Text>
 
-                <Button
-                    title={
-                        categories.includes('Shopping')
-                            ? '✓ Shopping'
-                            : 'Shopping'
-                    }
-                    onPress={() => selectCategory('Shopping')}
-                />
-
-                <Button
-                    title={
-                        categories.includes('Natur')
-                            ? '✓ Natur'
-                            : 'Natur'
-                    }
-                    onPress={() => selectCategory('Natur')}
-                />
-
-                <Button
-                    title={
-                        categories.includes('Kultur')
-                            ? '✓ Kultur'
-                            : 'Kultur'
-                    }
-                    onPress={() => selectCategory('Kultur')}
-                />
+                {['Billig', 'Mellem', 'Dyr'].map(option => (
+                    <Button
+                        key={option}
+                        title={price === option ? `✓ ${option}` : option}
+                        onPress={() => setPrice(option)}
+                    />
+                ))}
 
                 <Text style={styles.sectionTitle}>
-                    Prisklasse
+                    Hvor meget af dagen vil du planlægge?
                 </Text>
 
-                <Button
-                    title={price === 'Billig' ? '✓ Billig' : 'Billig'}
-                    onPress={() => setPrice('Billig')}
-                />
+                <Text style={styles.tripInfo}>
+                    Vælg hvor stor en del af dagen der skal være planlagt.
+                    Resten af dagen er fri til spontane aktiviteter.
+                </Text>
 
-                <Button
-                    title={price === 'Mellem' ? '✓ Mellem' : 'Mellem'}
-                    onPress={() => setPrice('Mellem')}
-                />
+                <View style={styles.foodBox}>
+                    {[25, 50, 75, 100].map(percentage => (
+                        <Pressable
+                            key={percentage}
+                            style={styles.planningOption}
+                            onPress={() => setDayPercentage(percentage)}
+                        >
+                            <Text style={styles.planningOptionTitle}>
+                                {dayPercentage === percentage ? '✓ ' : ''}
+                                {percentage}% af dagen
+                            </Text>
 
-                <Button
-                    title={price === 'Dyr' ? '✓ Dyr' : 'Dyr'}
-                    onPress={() => setPrice('Dyr')}
-                />
+                            <Text style={styles.tripInfo}>
+                                {percentage === 25 && 'Kl. 10–13 · Meget fritid'}
+                                {percentage === 50 && 'Kl. 10–16 · Halvdelen af dagen fri'}
+                                {percentage === 75 && 'Kl. 10–19 · Lidt fritid'}
+                                {percentage === 100 && 'Kl. 10–22 · Hele dagen planlagt'}
+                            </Text>
+                        </Pressable>
+                    ))}
+                </View>
 
                 <Text style={styles.readyText}>
                     Klar til at lave din rejseplan?
@@ -207,24 +159,22 @@ const PlanScreen = ({ navigation }) => {
 
                 <Pressable
                     style={styles.planButton}
-                    onPress={() =>
-                        navigation.navigate('Result', {
-                            country: country,
-                            city: city,
-                            startDate: startDate,
-                            endDate: endDate,
-                            hotel: hotel,
-                            categories: categories,
-                            foodPreference: foodPreference,
-                            price: price
-                        })
-                    }
+                    onPress={() => navigation.navigate('Result', {
+                        country,
+                        city,
+                        startDate,
+                        endDate,
+                        hotel,
+                        categories,
+                        foodPreference,
+                        price,
+                        dayPercentage
+                    })}
                 >
                     <Text style={styles.planButtonText}>
                         Lav min plan
                     </Text>
                 </Pressable>
-
             </View>
         </ScrollView>
     );

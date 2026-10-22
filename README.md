@@ -17,4 +17,4 @@ npx expo start
 ```
 Se en demonstration af TripApp her:
 
-https://youtube.com/shorts/-qkmSJYkMRw?feature=share
+https://youtu.be/7PZguIM1Dp4

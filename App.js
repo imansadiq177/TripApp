@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,13 +7,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import PlanScreen from './screens/PlanScreen';
 import ResultScreen from './screens/ResultScreen';
+import SavedPlansScreen from './screens/SavedPlansScreen';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
@@ -32,6 +33,11 @@ export default function App() {
                             iconName = focused
                                 ? 'map'
                                 : 'map-outline';
+
+                        } else if (route.name === 'SavedPlans') {
+                            iconName = focused
+                                ? 'bookmark'
+                                : 'bookmark-outline';
                         }
 
                         return (
@@ -44,7 +50,6 @@ export default function App() {
                     }
                 })}
             >
-
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
@@ -63,8 +68,12 @@ export default function App() {
                     options={{ title: 'Min plan' }}
                 />
 
+                <Tab.Screen
+                    name="SavedPlans"
+                    component={SavedPlansScreen}
+                    options={{ title: 'Gemte planer' }}
+                />
             </Tab.Navigator>
-
         </NavigationContainer>
     );
 }
